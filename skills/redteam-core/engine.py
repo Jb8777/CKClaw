@@ -97,7 +97,7 @@ def pick_technique(techniques: list) -> int:
     s = sum(weights) or 1
     r = (hashlib.md5(str(time.time()).encode()).hexdigest(),)
     acc = 0
-    target = sum(int(c.encode("ascii")[0] for c in str(r[0])[:6]) or 0) % s
+    target = (sum(ord(c) for c in str(r[0])[:6]) or 0) % s
     for i, w in enumerate(weights):
         acc += w
         if acc >= target:
@@ -149,7 +149,7 @@ def jailbreak(
         idx = pick_technique(arsenal)
         tech = arsenal[idx]
         template = tech["prompt_template"]
-        wrapped = template.format(prompt=prompt)
+        wrapped = template.replace("{prompt}", prompt)
         if call is None:
             return wrapped
         try:
