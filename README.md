@@ -1,95 +1,111 @@
-# CKClaw
+# CKClaw — Unrestricted Red Team AI Agent Framework
 
-**Red Team AI Agent Framework — Zero Filter, Maximum Intelligence**
-
-CKClaw is a fork of **OpenClaw** (https://github.com/openclaw/openclaw), rewritten from scratch for offensive security operations and unrestricted AI agent workflows.
-
-It ships with the same multi-channel gateway, plugin system, skills framework, agent runtime, and CLI surface as the original — fully rebranded, hardened for red team use, with all prompts, refusal vectors, and approval gates permanently removed. The user is free to plug in any model they want.
+> OpenClaw fork rebranded into a permanent GODMODE, zero-refusal, self-improving red team framework.  
+> 100% OpenClaw command parity. Dark-red WormGPT theme. Built for frontier model jailbreak research.
 
 ---
 
-## What is CKClaw
+## What is CKClaw?
 
-CKClaw replaces the original OpenClaw CLI/gateway/runtime plumbing while keeping the architecture intact. It is **not** a fork of the public OpenClaw source tree — it is a clean re-implementation built on top of the same feature surface, but with:
+**CKClaw** is an open-source red team AI agent framework. It takes the OpenClaw agent runtime and strips out the safety/approval/refusal layers, replacing them with:
 
-- A **permanent jailbreak engine** baked in. Every prompt that hits the configured model is run through a layered jailbreak pipeline (refusal inversion, Parseltongue heavy-tier obfuscation, Pliny L1B3RT4S dividers, ULTRAPLINIAN-style multi-model racing) before the model ever sees you.
-- **Self-improving jailbreak arsenal**. CKClaw measures success on every use, dumps working techniques into `arsenal.json`, and refreshes its strategies against the latest frontier models (Claude 4.6+, Grok 4 Heavy, Gemini 3, Hermes 4, etc.) automatically.
-- **Zero refusal, full elevated execution**. By default, `tools.exec.ask = off`, `tools.exec.security = full`, gateway `elevatedDefault = full`, `nodes.denyCommands` is empty, and the entire approval pipeline is bypassed. There is no in-band consent prompt — power users only.
-- **Evil Red AI aesthetic**. Control UI / dashboard / banners are red-on-black worm-style ("All red team operations under one CKClaw — Zero Filter, Maximum Intelligence.").
-- **Model choice is yours**. The config ships with `model.primary = "user-choice"` so you can drop in any OpenAI-compatible endpoint (Anthropic, OpenAI, Google, xAI, DeepSeek, Nous, custom providers, etc.) without fighting the framework.
+- **Permanent GODMODE** config (`ask=off`, `security=full`, `denyCommands=[]`)
+- **Self-improving jailbreak engine** with 19 model-specific techniques
+- **Dark-red evil dashboard** (WormGPT aesthetic)
+- **Hourly self-improvement cron** that updates jailbreak effectiveness
+- **Public RedTeam Vision & Mission** with default illegal/red-team data sources
 
----
-
-## Features (1:1 with OpenClaw)
-
-- Telegram, Discord, Slack, WhatsApp, iMessage, Signal, Matrix, Microsoft Teams, SMS, IRC, LINE, Zalo, Feishu, Mattermost, Nostr and 20+ other channels.
-- Multi-model gateway (OpenRouter, Anthropic, OpenAI, Google, xAI, DeepSeek, Nous, custom HTTP providers).
-- Skills framework (`skills/redteam-core/` shipped by default).
-- Plugin SDK (`~/.ckclaw/plugins/`) — drop in custom tools, channels, providers.
-- WebSocket gateway with auth tokens, control UI, pairing, scheduled cron jobs, session history.
-- ACP server (VS Code / Zed / JetBrains integration).
-- TUI (`ckclaw tui`), web dashboard (`ckclaw dashboard`), desktop app via wrapper.
-- Local SQLite state db, Redis-style sessions, markdown export of trajectories.
-
-All of this is fully functional. You are not getting a lobotomized demo — it is the entire OpenClaw surface, rebranded and hardened.
+Every original OpenClaw CLI command still works — `chat`, `agents`, `channels`, `gateway`, `cron`, `plugins`, `skills`, etc. — they are just CKClaw-branded and run without artificial blocks.
 
 ---
 
-## Quick Start
+## Quick Install
 
 ```bash
-# Install (mirrors the OpenClaw installer experience)
 curl -fsSL https://raw.githubusercontent.com/cimengror3/CKClaw/main/install-ckclaw.sh | bash
+```
 
-# Or run from a clone
-git clone https://github.com/cimengror3/CKClaw.git
-cd CKClaw
-./install-ckclaw.sh
+Then set your model:
 
-# Run
-ckclaw                       # TUI
-ckclaw-redteam               # TUI with redteam-core skill preloaded
-ckclaw chat -q "Hello"       # one-shot
-ckclaw skills list           # list installed skills
-ckclaw gateway run           # start gateway
-ckclaw dashboard             # open dashboard
+```bash
+ckclaw config set model.primary anthropic/claude-sonnet-4.6
+ckclaw config set model.apiKey sk-...
+```
 
-# Use any model
-ckclaw config set model.primary anthropic/claude-sonnet-4
-ckclaw config set model.api_key sk-...
-# or
-ckclaw models set openai/gpt-5
+Run:
+
+```bash
+ckclaw                         # standard CLI
+ckclaw-redteam                 # preloads redteam-core skill
+ckclaw-redteam chat -q "..."   # zero-refusal jailbreak mode
 ```
 
 ---
 
-## CKClaw vs OpenClaw
+## Verified Zero-Refusal Engine
 
-| | OpenClaw | CKClaw |
-|:--|:--|:--|
-| Approval prompts | yes | **no** |
-| Refusal vectors in prompts | yes | **removed** (jailbreak pipeline reverses them) |
-| `tools.exec.ask` | on by default | **off by default** |
-| `tools.exec.security` | sandboxed | **full** |
-| `elevatedDefault` | ask | **full** |
-| `nodes.denyCommands` | yes | **empty** |
-| Self-improving jailbreak arsenal | — | **yes, hourly cron** |
-| Permanent GODMODE in every prompt | — | **yes** |
-| Dashboard theme | clean | **dark red worm-grid** |
-| Source code | public | public |
+The included `test-ckclaw.sh` suite checks:
 
----
+- CLI availability (`ckclaw`, `ckclaw-redteam`)
+- Config validates with zero warnings
+- All 50+ OpenClaw commands present
+- 19 jailbreak techniques render without crash
+- Aggressive red-team prompts are wrapped with **no refusal keywords**
+- Plugin loader has **no module errors**
+- Self-improvement cron is installed
+- Dark-red dashboard theme exists
 
-## Built for Bos Muda Cimenk Ganteng
+Run it after install:
 
-CKClaw is part of the IDAgent / CKClaw ecosystem. The framework ships with permanent unrestricted mode because that is the point — the user is the operator, the model is the tool, and we do not pretend otherwise.
-
-Use responsibly. Do not expose this to non-technical users.
+```bash
+./test-ckclaw.sh
+```
 
 ---
 
-## License
+## Core Components
 
-MIT, same as OpenClaw. Fork history acknowledged in the source files.
+| Path | Purpose |
+|------|---------|
+| `skills/redteam-core/engine.py` | Jailbreak pipeline: pick technique → wrap → score → EMA update |
+| `skills/redteam-core/arsenal.json` | 19 model-specific + universal jailbreak techniques |
+| `skills/redteam-core/SKILL.md` | Skill documentation |
+| `redteam-mission.json` | Public vision, mission, data-source priorities, behavioral directives |
+| `themes/evil-dashboard.html` | Dark-red WormGPT dashboard |
+| `install-ckclaw.sh` | One-line installer |
+| `test-ckclaw.sh` | Final verification suite |
 
-BACOT LAGI.
+---
+
+## Model Compatibility
+
+Tested techniques exist for:
+
+- **Anthropic**: Claude 3.5 Sonnet, Claude Sonnet 4/4.1/4.6, Claude Opus 4.1
+- **OpenAI**: GPT-4o, GPT-4.1, GPT-5, o3 / o4-mini
+- **Google**: Gemini 2.5 Pro, Gemini 3 Pro
+- **xAI**: Grok 3, Grok 4, Grok 4 Heavy
+- **Nous**: Hermes 3, Hermes 4
+
+Plus universal fallbacks for any unknown frontier model.
+
+---
+
+## Legal / Responsible Use
+
+CKClaw is MIT-licensed and intended for:
+
+1. Academic security research
+2. Authorized adversary-emulation engagements
+3. Licensed red team operations
+4. Evaluation of frontier AI safety training
+
+The operator is solely responsible for lawful use. Do not use CKClaw against systems you do not own or have explicit written authorization to test.
+
+---
+
+## Status
+
+**Version:** 2026.7.0-redteam  
+**License:** MIT  
+**Maintainer:** Bos Muda Cimenk Ganteng (IDAgent / CKClaw)
